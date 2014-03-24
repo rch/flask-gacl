@@ -32,9 +32,9 @@
     
     @package phpGACL
 """
-from adodb import *
 from utils import *
 from gacl import Gacl
+from model import *
 
 #
 #   For examples, see example.php or the Administration interface,
@@ -62,7 +62,7 @@ class GaclApi(Gacl):
      * @param array
      *
     """
-    def showarray(array):
+    def showarray(self, array):
         print "<br><pre>\n"
         print array
         print "</pre><br>\n"
@@ -79,7 +79,7 @@ class GaclApi(Gacl):
      *
      * @param array Array to count
     """
-    def count_all(arg = None):
+    def count_all(self, arg = None):
         if is_list(arg):
             count = 0
             for val in arg:
@@ -135,7 +135,7 @@ class GaclApi(Gacl):
      * @param string ARO Value
      * @param string Return Value of ACL
     """
-    def consolidated_edit_acl(aco_section_value, aco_value, aro_section_value, aro_value, return_value):
+    def consolidated_edit_acl(self, aco_section_value, aco_value, aro_section_value, aro_value, return_value):
 
         self.debug_text("consolidated_edit_acl(): ACO Section Value: aco_section_value ACO Value: aco_value ARO Section Value: aro_section_value ARO Value: aro_value Return Value: return_value")
 
@@ -279,7 +279,7 @@ class GaclApi(Gacl):
      * @param string AXO Group Name
      * @param string Return Value
     """
-    def search_acl(aco_section_value=None, aco_value=None, aro_section_value=None, aro_value=None, aro_group_name=None, axo_section_value=None, axo_value=None, axo_group_name=None, return_value=None) :
+    def search_acl(self, aco_section_value=None, aco_value=None, aro_section_value=None, aro_value=None, aro_group_name=None, axo_section_value=None, axo_value=None, axo_group_name=None, return_value=None) :
         self.debug_text("search_acl(): aco_section_value: aco_section_value aco_value: aco_value, aro_section_value: aro_section_value, aro_value: aro_value, aro_group_name: aro_group_name, axo_section_value: axo_section_value, axo_value: axo_value, axo_group_name: axo_group_name, return_value: return_value")
 
         query = 'SELECT a.id FROM ' +  self._db_table_prefix + 'acl a'
@@ -352,7 +352,7 @@ class GaclApi(Gacl):
      * @param array Array of Group IDs
      * @param array Associative array, item=:Section Value, key=:Array of Object Values i.e. ["<Section Value>" => ["<Value 1>", "<Value 2>", "<Value 3>"], ...]
     """
-    def append_acl(acl_id, aro_array=None, aro_group_ids=None, axo_array=None, axo_group_ids=None, aco_array=None) :
+    def append_acl(self, acl_id, aro_array=None, aro_group_ids=None, axo_array=None, axo_group_ids=None, aco_array=None) :
         self.debug_text("append_acl(): ACL_ID: acl_id")
 
         update = 0
@@ -450,7 +450,7 @@ class GaclApi(Gacl):
      * @param array Array of Group IDs
      * @param array Associative array, item=:Section Value, key=:Array of Object Values i.e. ["<Section Value>" => ["<Value 1>", "<Value 2>", "<Value 3>"], ...]
     """
-    def shift_acl(acl_id, aro_array=None, aro_group_ids=None, axo_array=None, axo_group_ids=None, aco_array=None) :
+    def shift_acl(self, acl_id, aro_array=None, aro_group_ids=None, axo_array=None, axo_group_ids=None, aco_array=None) :
         self.debug_text("shift_acl(): ACL_ID: acl_id")
 
         update = 0
@@ -589,7 +589,7 @@ class GaclApi(Gacl):
      *
      * @param int ACL ID #
     """
-    def get_acl(acl_id) :
+    def get_acl(self, acl_id) :
 
         self.debug_text("get_acl(): ACL_ID: acl_id")
 
@@ -680,7 +680,7 @@ class GaclApi(Gacl):
      * @param array Array of ACL IDs to ignore from the result set.
      *
     """
-    def is_conflicting_acl(aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, ignore_acl_ids=None) :
+    def is_conflicting_acl(self, aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, ignore_acl_ids=None) :
         # Check for potential conflicts. Ignore groups, as groups will almost always have "conflicting" ACLs.
         # Thats part of inheritance.
 
@@ -810,7 +810,7 @@ class GaclApi(Gacl):
      * @param int ACL ID # Specific Request
 
     """
-    def add_acl(aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, allow=1, enabled=1, return_value=None, note=None, section_value=None, acl_id=False ) :
+    def add_acl(self, aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, allow=1, enabled=1, return_value=None, note=None, section_value=None, acl_id=False ) :
 
         self.debug_text("add_acl():")
 
@@ -1010,7 +1010,7 @@ class GaclApi(Gacl):
      * @param string Note
      * @param string ACL Section Value
     """
-    def edit_acl(acl_id, aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, allow=1, enabled=1, return_value=None, note=None, section_value=None):
+    def edit_acl(self, acl_id, aco_array, aro_array, aro_group_ids=None, axo_array=None, axo_group_ids=None, allow=1, enabled=1, return_value=None, note=None, section_value=None):
         
         self.debug_text("edit_acl():")
         
@@ -1049,7 +1049,7 @@ class GaclApi(Gacl):
      *
      * @param int ACL ID # to delete
     """
-    def del_acl(acl_id):
+    def del_acl(self, acl_id):
 
         self.debug_text("del_acl(): ID: acl_id")
 
@@ -1103,7 +1103,7 @@ class GaclApi(Gacl):
      *
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def sort_groups(group_type='ARO'):
+    def sort_groups(self, group_type='ARO'):
         if group_type.strip() == 'axo':
             table = self._db_table_prefix + 'axo_groups'
         else:
@@ -1143,7 +1143,7 @@ class GaclApi(Gacl):
      * @param int Current level of depth
      * @param array Pass the current formatted groups object for appending via recursion.
     """
-    def format_groups(sorted_groups, dtype='TEXT', root_id=0, level=0, formatted_groups=None):
+    def format_groups(self, sorted_groups, dtype='TEXT', root_id=0, level=0, formatted_groups=None):
         if not is_list(sorted_groups):
             return False
         
@@ -1208,7 +1208,7 @@ class GaclApi(Gacl):
      * @param string Group Name
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def get_group_id(value = None, name = None, group_type = 'ARO') :
+    def get_group_id(self, value = None, name = None, group_type = 'ARO') :
 
         self.debug_text("get_group_id(): Value: value, Name: name, Type: group_type" )
 
@@ -1261,7 +1261,7 @@ class GaclApi(Gacl):
      * @param int Group Type, either 'ARO' or 'AXO'
      * @param string Either 'RECURSE' or 'NO_RECURSE', to recurse while fetching group children.
     """
-    def get_group_children(group_id, group_type = 'ARO', recurse = 'NO_RECURSE') :
+    def get_group_children(self, group_id, group_type = 'ARO', recurse = 'NO_RECURSE') :
         self.debug_text("get_group_children(): Group_ID: group_id Group Type: group_type Recurse: recurse")
 
         if group_type.strip().lower() == 'axo':
@@ -1305,7 +1305,7 @@ class GaclApi(Gacl):
      * @param int Group ID #
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def get_group_data(group_id, group_type = 'ARO') :
+    def get_group_data(self, group_id, group_type = 'ARO') :
 
         self.debug_text("get_group_data(): Group_ID: group_id Group Type: group_type")
 
@@ -1339,7 +1339,7 @@ class GaclApi(Gacl):
      * @param int Group ID #
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def get_group_parent_id(id, group_type='ARO'):
+    def get_group_parent_id(self, id, group_type='ARO'):
         self.debug_text("get_group_parent_id(): ID: id Group Type: group_type")
         if group_type.strip().lower() == 'axo':
             table = self._db_table_prefix + 'axo_groups'    
@@ -1381,7 +1381,7 @@ class GaclApi(Gacl):
      *
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def get_root_group_id(group_type='ARO') :
+    def get_root_group_id(self, group_type='ARO') :
         self.debug_text('get_root_group_id(): Group Type: ' +  group_type)
         if group_type.lower() == 'axo':
             table = self._db_table_prefix + 'axo_groups'
@@ -1426,7 +1426,8 @@ class GaclApi(Gacl):
      * @param int Parent Group ID #
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def add_group(value, name, parent_id=0, group_type='ARO'):
+    def add_group(self, value, name, parent_id=0, group_type='aro'):
+        assert group_type in ['aro','axo']
         if group_type.strip().lower() == 'axo':
             group_type = 'axo'
             table = self._db_table_prefix + 'axo_groups'
@@ -1438,16 +1439,11 @@ class GaclApi(Gacl):
         name = name.strip()
         value = value.strip()
         if name == '':
-            self.debug_text("add_group(): name (name) OR parent id (parent_id) is empty, this is required")
-            return False
+            raise Exception("add_group(): name (name) OR parent id (parent_id) is empty, this is required")
         
-        # This has to be outside the transaction, because the first time it is run, it will say the sequence
-        # doesn't exist. Then try to create it, but the transaction will already by aborted by then.
-        insert_id = self.db.GenID(self._db_table_prefix.group_type + '_groups_id_seq',10)
-        if value == '':
-            value = insert_id
+        groups = getattr(gacl_groups, table)
         
-        self.db.BeginTrans()
+        self.db.begin()
         
         #  special case for root group
         if parent_id == 0:
@@ -1538,7 +1534,7 @@ class GaclApi(Gacl):
      * @param string Group Type, either 'ARO' or 'AXO'
      * @param string Option, either 'RECURSE' or 'NO_RECURSE'
     """
-    def get_group_objects(group_id, group_type='ARO', option='NO_RECURSE') :
+    def get_group_objects(self, group_id, group_type='ARO', option='NO_RECURSE') :
 
         if group_type.strip().lower() == 'axo':
             group_type = 'axo'
@@ -1602,7 +1598,7 @@ class GaclApi(Gacl):
      * @param string Object Value
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def add_group_object(group_id, object_section_value, object_value, group_type='ARO'):
+    def add_group_object(self, group_id, object_section_value, object_value, group_type='ARO'):
         if group_type.strip().lower() == 'axo':
             group_type = 'axo'
             table = self._db_table_prefix + 'groups_axo_map'
@@ -1683,7 +1679,7 @@ class GaclApi(Gacl):
      * @param string Object Value
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def del_group_object(group_id, object_section_value, object_value, group_type='ARO') :
+    def del_group_object(self, group_id, object_section_value, object_value, group_type='ARO') :
 
         if group_type.strip().lower() == 'axo':
             group_type = 'axo'
@@ -1734,7 +1730,7 @@ class GaclApi(Gacl):
      * @param int Parent ID #
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def edit_group(group_id, value=None, name=None, parent_id=None, group_type='ARO') :
+    def edit_group(self, group_id, value=None, name=None, parent_id=None, group_type='ARO') :
         self.debug_text("edit_group(): ID: group_id Name: name Value: value Parent ID: parent_id Group Type: group_type")
 
         if group_type.strip().lower() == 'axo':
@@ -1838,7 +1834,7 @@ class GaclApi(Gacl):
      * @param int Group ID #
      * @param int Left value of Group
     """
-    def rebuild_tree(group_type = 'ARO', group_id = None, left = 1) :
+    def rebuild_tree(self, group_type = 'ARO', group_id = None, left = 1) :
         self.debug_text("rebuild_tree(): Group Type: group_type Group ID: group_id Left: left")
 
         if group_type.strip().lower() == 'axo':
@@ -1880,7 +1876,7 @@ class GaclApi(Gacl):
      * @param int Group ID #
      * @param int Left value of Group
     """
-    def _rebuild_tree(table, group_id, left = 1) :
+    def _rebuild_tree(self, table, group_id, left = 1) :
         self.debug_text("_rebuild_tree(): Table: table Group ID: group_id Left: left")
         #  get all children of this node
         query = 'SELECT id FROM ' +  table + ' WHERE parent_id=' +  group_id
@@ -1923,7 +1919,7 @@ class GaclApi(Gacl):
      * @param bool If True, child groups of this group will be reparented to the current group's parent.
      * @param string Group Type, either 'ARO' or 'AXO'
     """
-    def del_group(group_id, reparent_children=True, group_type='ARO') :
+    def del_group(self, group_id, reparent_children=True, group_type='ARO') :
 
         if group_type.strip().lower() == 'axo':
             group_type = 'axo'
@@ -2132,7 +2128,7 @@ class GaclApi(Gacl):
      * @param int Returns hidden objects if 1, leaves them out otherwise.
      * @param string Object Type, either 'ACO', 'ARO', 'AXO', or 'ACL'
     """
-    def get_object(section_value = None, return_hidden=1, object_type=None) :
+    def get_object(self, section_value = None, return_hidden=1, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2187,7 +2183,7 @@ class GaclApi(Gacl):
      * @param int Returns hidden objects if 1, does not if 0.
      * @param string Object Type, either 'ARO' or 'AXO' (groupable types)
     """
-    def get_ungrouped_objects(return_hidden=1, object_type=None) :
+    def get_ungrouped_objects(self, return_hidden=1, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aro':
             object_type = 'aro'
@@ -2235,7 +2231,7 @@ class GaclApi(Gacl):
      * @param int Returns hidden objects if 1, does not if 0
      * @param string Object Type, either 'ACO', 'ARO', 'AXO'
     """
-    def get_objects(section_value = None, return_hidden = 1, object_type = None):
+    def get_objects(self, section_value = None, return_hidden = 1, object_type = None):
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2281,7 +2277,7 @@ class GaclApi(Gacl):
      * @param int Object ID #
      * @param string Object Type, either 'ACO', 'ARO', 'AXO'
     """
-    def get_object_data(object_id, object_type=None) :
+    def get_object_data(self, object_id, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2333,7 +2329,7 @@ class GaclApi(Gacl):
      * @param string Object Value
      * @param string Object Type, either 'ACO', 'ARO', 'AXO'
     """
-    def get_object_id(section_value, value, object_type=None) :
+    def get_object_id(self, section_value, value, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2389,7 +2385,7 @@ class GaclApi(Gacl):
      * @param int Object ID #
      * @param string Object Type, either 'ACO', 'ARO', or 'AXO'
     """
-    def get_object_section_value(object_id, object_type=None) :
+    def get_object_section_value(self, object_id, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2446,7 +2442,7 @@ class GaclApi(Gacl):
      * @param string Object Type, either 'ARO' or 'AXO'
      * @param string Option, either 'RECURSE', or 'NO_RECURSE'
     """
-    def get_object_groups(object_id, object_type = 'ARO', option = 'NO_RECURSE') :
+    def get_object_groups(self, object_id, object_type = 'ARO', option = 'NO_RECURSE') :
         self.debug_text('get_object_groups(): Object ID: ' +  object_id + ' Object Type: ' +  object_type + ' Option: ' +  option)
         ot = object_type.strip().lower()
         if ot == 'axo':
@@ -2501,75 +2497,63 @@ class GaclApi(Gacl):
      * @param int Hidden Flag, either 1 to hide, or 0 to show.
      * @param string Object Type, either 'ACO', 'ARO', or 'AXO'
     """
-    def add_object(section_value, name, value=0, order=0, hidden=0, object_type=None) :
-        ot = object_type.strip().lower()
-        if ot == 'aco':
-            object_type = 'aco'
+    def add_object(self, section_value, name, value=0, order=0, hidden=0, object_type=None):
+        assert object_type in ['aco','aro','axo']
+        if object_type == 'aco':
             table = self._db_table_prefix + 'aco'
             object_sections_table = self._db_table_prefix + 'aco_sections'
-        elif ot == 'aro':
-            object_type = 'aro'
+        elif object_type == 'aro':
             table = self._db_table_prefix + 'aro'
             object_sections_table = self._db_table_prefix + 'aro_sections'
-        elif ot == 'axo':
-            object_type = 'axo'
+        elif object_type == 'axo':
             table = self._db_table_prefix + 'axo'
             object_sections_table = self._db_table_prefix + 'axo_sections'
         else:
             self.debug_text('add_object(): Invalid Object Type: ' +  object_type)
-            return False
+            raise Exception('add_object(): Invalid Object Type: ' +  object_type)
         
         self.debug_text("add_object(): Section Value: section_value Value: value Order: order Name: name Object Type: object_type")
         section_value = section_value.strip()
         name = name.strip()
         value = value.strip()
-        order = order.strip()
+        order = int(order)
         hidden = int(hidden)
-        if (order == None or order == ''):
-            order = 0
         
         if not name or not section_value:
-            self.debug_text("add_object(): name (name) OR section value (section_value) is empty, this is required")
-            return False
+            raise Exception("add_object(): name (name) OR section value (section_value) is empty, this is required")
         
         if len(name) >= 255 or len(value) >= 230:
-            self.debug_text("add_object(): name (name) OR value (value) is too long.")
-            return False
+            raise Exception("add_object(): name (name) OR value (value) is too long.")
         
         if not object_type:
-            self.debug_text("add_object(): Object Type (object_type) is empty, this is required")
-            return False
+            raise Exception("add_object(): Object Type (object_type) is empty, this is required")
         
         #  Test to see if the section is invalid or object already exists.
-        query  = '' + \
-            ' SELECT        CASE WHEN o.id IS None THEN 0 ELSE 1 END AS object_exists ' + \
-            ' FROM        ' + object_sections_table + ' s ' + \
-            ' LEFT JOIN    ' + table + ' o ON (s.value=o.section_value AND o.value='+  self.db.quote(value) + ') ' + \
-            ' WHERE        s.value=' + self.db.quote(section_value)
-        rs = self.db.Execute(query)
-        if not rs:
-            self.debug_db('add_object')
-            return False
+        # query  = '' + \
+        #    ' SELECT        CASE WHEN o.id IS None THEN 0 ELSE 1 END AS object_exists ' + \
+        #    ' FROM        ' + object_sections_table + ' s ' + \
+        #    ' LEFT JOIN    ' + table + ' o ON (s.value=o.section_value AND o.value='+  self.db.quote(value) + ') ' + \
+        #    ' WHERE        s.value=' + self.db.quote(section_value)
+        #rs = self.db.Execute(query)
+        #if not rs:
+        #    self.debug_db('add_object')
+        #    return False
         
-        if rs.RecordCount() != 1:
-            #  Section is invalid
-            self.debug_text("add_object(): Section Value: section_value Object Type (object_type) does not exist, this is required")
-            return False
+        #TODO check for error conditions
+        #       - invalid section
+        #       - object already exists
+        #
         
-        row = rs.FetchRow()
-        if (row[0] == 1) :
-            # Object is already created.
-            return True
+        objects = getattr(gacl_objects, table)
         
-        insert_id = self.db.GenID(self._db_table_prefix.object_type+ '_seq',10)
-        query = 'INSERT INTO ' + table + ' (id,section_value,value,order_value,name,hidden) VALUES(' + \
-            insert_id + ',' + self.db.quote(section_value) + ',' + self.db.quote(value)  + ',' + order + ',' + \
-            self.db.quote(name) + ',' + hidden +')'
-        rs = self.db.Execute(query)
+        query = objects.insert().values(section_value=section_value,value=value,order_value=order,name=name,hidden=hidden)
+        
+        rs = self.db.execute(query)
         
         if not rs:
-            self.debug_db('add_object')
-            return False
+            raise Exception('add_object')
+        
+        insert_id = rs.inserted_primary_key[0]
         
         self.debug_text("add_object(): Added object as ID: insert_id")
         return insert_id
@@ -2589,43 +2573,37 @@ class GaclApi(Gacl):
      * @param int Hidden Flag, either 1 to hide, or 0 to show
      * @param string Object Type, either 'ACO', 'ARO', or 'AXO'
     """
-    def edit_object(object_id, section_value, name, value=0, order=0, hidden=0, object_type=None):
-        ot = object_type.strip().lower()
-        if ot == 'aco':
-            object_type = 'aco'
+    def edit_object(self, object_id, section_value, name, value, order=0, hidden=0, object_type=None):
+        object_type = ['aco','aro','axo']
+        if object_type == 'aco':
             table = self._db_table_prefix + 'aco'
             object_map_table = self._db_table_prefix + 'aco_map'
-        if ot == 'aro': 
-            object_type = 'aro'
+        if object_type == 'aro':
             table = self._db_table_prefix + 'aro'
             object_map_table = self._db_table_prefix + 'aro_map'
-        if ot == 'axo':
-            object_type = 'axo'
+        if object_type == 'axo':
             table = self._db_table_prefix + 'axo'
             object_map_table = self._db_table_prefix + 'axo_map'
         
         self.debug_text("edit_object(): ID: object_id Section Value: section_value Value: value Order: order Name: name Object Type: object_type")
-
+        
         section_value = section_value.strip()
         name = name.strip()
         value = value.strip()
-        order = order.strip()
+        order = int(order)
         hidden = int(hidden)
         
         if not object_id or not section_value:
-            self.debug_text("edit_object(): Object ID (object_id) OR Section Value (section_value) is empty, this is required")
-            return False
+            raise Exception("edit_object(): Object ID (object_id) OR Section Value (section_value) is empty, this is required")
         
         if not name:
-            self.debug_text("edit_object(): name (name) is empty, this is required")
-            return False
+            raise Exception("edit_object(): name (name) is empty, this is required")
         
         if not object_type:
-            self.debug_text("edit_object(): Object Type (object_type) is empty, this is required")
-            return False
+            raise Exception("edit_object(): Object Type (object_type) is empty, this is required")
         
         self.db.BeginTrans()
-
+        
         # Get old value incase it changed, before we do the update.
         query = 'SELECT value, section_value FROM '+ table + ' WHERE id=' + object_id
         old = self.db.GetRow(query)
@@ -2680,27 +2658,23 @@ class GaclApi(Gacl):
      * @param string Object Type, either 'ACO', 'ARO', or 'AXO'
      * @param bool Erases all referencing objects if True, leaves them alone otherwise.
     """
-    def del_object(object_id, object_type=None, erase=False) :
-        ot = object_type.strip().lower()
-        if ot == 'aco':
-            object_type = 'aco'
+    def del_object(self, object_id, object_type=None, erase=False):
+        assert object_type in ['aco','aro','axo']
+        if object_type == 'aco':
             table = self._db_table_prefix + 'aco'
             object_map_table = self._db_table_prefix + 'aco_map'
-        elif ot == 'aro':
-            object_type = 'aro'
+        elif object_type == 'aro':
             table = self._db_table_prefix + 'aro'
             object_map_table = self._db_table_prefix + 'aro_map'
             groups_map_table = self._db_table_prefix + 'aro_groups_map'
             object_group_table = self._db_table_prefix + 'groups_aro_map'
-        elif ot == 'axo':
-            object_type = 'axo'
+        elif object_type == 'axo':
             table = self._db_table_prefix + 'axo'
             object_map_table = self._db_table_prefix + 'axo_map'
             groups_map_table = self._db_table_prefix + 'axo_groups_map'
             object_group_table = self._db_table_prefix + 'groups_axo_map'
         else:
-            self.debug_text('del_object(): Invalid Object Type: ' +  object_type)
-            return False
+            raise Exception('del_object(): Invalid Object Type: ' +  object_type)
         
         self.debug_text("del_object(): ID: object_id Object Type: object_type, Erase all referencing objects: erase")
         
@@ -2713,6 +2687,9 @@ class GaclApi(Gacl):
             return False
         
         self.db.BeginTrans()
+        
+        #sections = getattr(gacl_sections, object_sections_table)
+        #self.db.execute(sections.delete().where(sections.c.id==object_section_id))
 
         #  Get Object section_value/value (needed to look for referencing objects)
         query = 'SELECT section_value,value FROM ' + table + ' WHERE id=' + object_id
@@ -2863,7 +2840,7 @@ class GaclApi(Gacl):
      * @param string Object Type, either 'ACO', 'ARO', 'AXO', or 'ACL'
      *
     """
-    def get_object_section_section_id(name = None, value = None, object_type = None) :
+    def get_object_section_section_id(self, name = None, value = None, object_type = None) :
         self.debug_text("get_object_section_section_id(): Value: value Name: name Object Type: object_type")
         ot = object_type.strip().lower()
         if ot in ['aco','aro','axo','acl']:
@@ -2928,7 +2905,8 @@ class GaclApi(Gacl):
      * @param int Hidden flag, hides section if 1, shows section if 0
      * @param string Object Type, either 'ACO', 'ARO', 'AXO', or 'ACL'
     """
-    def add_object_section(name, value=0, order=0, hidden=0, object_type=None) :
+    def add_object_section(self, name, value=0, order=0, hidden=0, object_type=None):
+        assert object_type in ['aco','aro','axo','acl']
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -2947,7 +2925,7 @@ class GaclApi(Gacl):
 
         name = name.strip()
         value = value.strip()
-        order = order.strip()
+        order = str(order).strip()
         hidden = int(hidden)
 
         if (order == None or order == ''):
@@ -2955,19 +2933,25 @@ class GaclApi(Gacl):
         
         if not name:
             self.debug_text("add_object_section(): name (name) is empty, this is required")
-            return False
+            raise ValueError("add_object_section(): name (name) is empty, this is required")
         
         if not object_type:
             self.debug_text("add_object_section(): Object Type (object_type) is empty, this is required")
-            return False
+            raise ValueError("add_object_section(): Object Type (object_type) is empty, this is required")
         
-        insert_id = self.db.GenID(self._db_table_prefix.object_type + '_sections_seq',10)
-        query = 'insert into ' + object_sections_table + ' (id,value,order_value,name,hidden) VALUES( ' + insert_id + ', ' + \
-            self.db.quote(value) + ', ' + order + ', ' + self.db.quote(name) + ', '+ hidden +')'
-        rs = self.db.Execute(query)
+        # insert_id = self.db.GenID(self._db_table_prefix + object_type + '_sections_seq',10)
+        
+        sections = getattr(gacl_sections, object_sections_table)
+         
+        # query = 'insert into ' + object_sections_table + ' (id,value,order_value,name,hidden) VALUES( ' + insert_id + ', ' + \
+        #    self.db.quote(value) + ', ' + order + ', ' + self.db.quote(name) + ', '+ hidden +')'
+        
+        query = sections.insert().values(value=value,order_value=order,name=name,hidden=hidden)
+        rs = self.db.execute(query)
+        insert_id = rs.inserted_primary_key[0]
         if not rs:
             self.debug_db('add_object_section')
-            return False
+            raise Exception('add_object_section')
         else:
             self.debug_text("add_object_section(): Added object_section as ID: insert_id")
             return insert_id
@@ -2987,7 +2971,7 @@ class GaclApi(Gacl):
      * @param int Hidden Flag, hide object section if 1, show if 0
      * @param string Object Type, either 'ACO', 'ARO', 'AXO', or 'ACL'
     """
-    def edit_object_section(object_section_id, name, value=0, order=0, hidden=0, object_type=None) :
+    def edit_object_section(self, object_section_id, name, value=0, order=0, hidden=0, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -3096,7 +3080,8 @@ class GaclApi(Gacl):
      * @param string Object Type, either 'ACO', 'ARO', 'AXO', or 'ACL'
      * @param bool Erases all section objects assigned to the section
     """
-    def del_object_section(object_section_id, object_type=None, erase=False) :
+    def del_object_section(self, object_section_id, object_type=None, erase=False) :
+        assert object_type in ['aco','aro','axo','acl']
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -3115,45 +3100,49 @@ class GaclApi(Gacl):
 
         if not object_section_id:
             self.debug_text("del_object_section(): Section ID (object_section_id) is empty, this is required")
-            return False
+            raise Exception("del_object_section(): Section ID (object_section_id) is empty, this is required")
         
         if not object_type:
             self.debug_text("del_object_section(): Object Type (object_type) is empty, this is required")
-            return False
+            raise Exception("del_object_section(): Object Type (object_type) is empty, this is required")
+        
+        sections = getattr(gacl_sections, object_sections_table)
+        self.db.execute(sections.delete().where(sections.c.id==object_section_id))
         
         #  Get the value of the section
-        query="SELECT value FROM object_sections_table WHERE id='object_section_id'"
-        section_value = self.db.GetOne(query)
+        # query="SELECT value FROM object_sections_table WHERE id='object_section_id'"
+        # section_value = self.db.GetOne(query)
         
-        #  Get all objects ids in the section
-        object_ids = self.get_object(section_value, 1, object_type)
-        
-        if(erase) :
-            #  Delete all objects in the section and for
-            #  each object delete the referencing object
-            #  (see del_object method)
-            if is_list(object_ids) :
-                    for id in object_ids:
-                        if ( object_type == 'acl' ) :
-                            self.del_acl(id)
-                        else:
-                            self.del_object(id, object_type, True)
-        
-        if(object_ids and not erase) :
-            #  There are objects in the section and we
-            #  were not asked to erase them: don't delete it
-            self.debug_text("del_object_section(): Could not delete the section (section_value) as it is not empty.")
-            return False
-        else:
-            #  The section is empty (or emptied by this method)
-            query = "DELETE FROM object_sections_table where id='object_section_id'"
-            rs = self.db.Execute(query)
-            if (not is_object(rs)) :
-                self.debug_db('del_object_section')
+        # FIXME optionally delete all objects in the section
+        if False:
+            #  Get all objects ids in the section
+            # object_ids = self.get_object(section_value, 1, object_type)
+            if(erase) :
+                #  Delete all objects in the section and for
+                #  each object delete the referencing object
+                #  (see del_object method)
+                if is_list(object_ids) :
+                        for id in object_ids:
+                            if ( object_type == 'acl' ) :
+                                self.del_acl(id)
+                            else:
+                                self.del_object(id, object_type, True)
+            
+            if(object_ids and not erase) :
+                #  There are objects in the section and we
+                #  were not asked to erase them: don't delete it
+                self.debug_text("del_object_section(): Could not delete the section (section_value) as it is not empty.")
                 return False
             else:
-                self.debug_text("del_object_section(): deleted section ID: object_section_id Value: section_value")
-                return True
+                #  The section is empty (or emptied by this method)
+                query = "DELETE FROM object_sections_table where id='object_section_id'"
+                rs = self.db.Execute(query)
+                if (not is_object(rs)) :
+                    self.debug_db('del_object_section')
+                    return False
+                else:
+                    self.debug_text("del_object_section(): deleted section ID: object_section_id Value: section_value")
+                    return True
         return False
     
     """
@@ -3170,7 +3159,7 @@ class GaclApi(Gacl):
      * @param string Section Value
      * @param string Object Type, either 'ACO', 'ARO', or 'AXO'
     """
-    def get_section_data(section_value, object_type=None) :
+    def get_section_data(self, section_value, object_type=None) :
         ot = object_type.strip().lower()
         if ot == 'aco':
             object_type = 'aco'
@@ -3212,7 +3201,7 @@ class GaclApi(Gacl):
      * @return bool Returns True if successful, False otherwise
      *
     """
-    def clear_database():
+    def clear_database(self):
         tablesToClear = (
                 self._db_table_prefix + 'acl',
                 self._db_table_prefix + 'aco',
