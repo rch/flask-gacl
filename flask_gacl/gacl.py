@@ -94,7 +94,6 @@ class Gacl(object):
         #        config = parse_ini_file(self.config_file)
         #        if ( is_list(config) ) :
         #                gacl_options = array_merge(config, options)
-        #        
         #        unset(config)
         
         #FIXME refactor completely
